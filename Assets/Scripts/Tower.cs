@@ -3,19 +3,24 @@ using UnityEngine;
 
 public class Tower : MonoBehaviour
 {
-    public Transform towerHead;
+    private EnemyCreator enemyCreator;
+
+    [SerializeField] private Transform towerHead;
     private Transform enemy;
 
-    public EnemyCreator enemyCreator;
-
     [Header("Attack Details")]
-    public float attackRange = 3.0f;  // attack range of the tower
-    public float attackCooldown = 2.0f;//attack cooldown(interval between each bullet)
+    [SerializeField] private float attackRange = 3.0f;  // attack range of the tower
+    [SerializeField] private float attackCooldown = 2.0f;//attack cooldown(interval between each bullet)
     private float lastAttackTime;
 
     [Header("Bullet Details")]
-    public GameObject bulletPrefab; // bullet prefab reference
-    public float bulletSpeed = 3.0f; // speed of the bullet
+    [SerializeField] private GameObject bulletPrefab; // bullet prefab reference
+    [SerializeField] private float bulletSpeed = 3.0f; // speed of the bullet
+
+    private void Awake()
+    {
+        enemyCreator = FindAnyObjectByType<EnemyCreator>();
+    }
 
     private void Update()
     {
@@ -42,7 +47,7 @@ public class Tower : MonoBehaviour
         float closestDistance = float.MaxValue;
         Transform closestEnemy = null;
 
-        foreach (Transform enemy in enemyCreator.enemyList)
+        foreach (Transform enemy in enemyCreator.EnemyList())
         {
             float distance = Vector3.Distance(enemy.position, transform.position);
 
@@ -55,7 +60,7 @@ public class Tower : MonoBehaviour
 
         if( closestEnemy != null )
         {
-            enemyCreator.enemyList.Remove(closestEnemy);
+            enemyCreator.EnemyList().Remove(closestEnemy);
         }
 
         return closestEnemy;
@@ -64,13 +69,13 @@ public class Tower : MonoBehaviour
 
     void FindRandomEnemy()
     {
-        if(enemyCreator.enemyList.Count <= 0)
+        if(enemyCreator.EnemyList().Count <= 0)
         {
           return;
         }
-        int randomEnemyIndex = Random.Range(0, enemyCreator.enemyList.Count);
-        enemy = enemyCreator.enemyList[randomEnemyIndex];
-        enemyCreator.enemyList.RemoveAt(randomEnemyIndex);
+        int randomEnemyIndex = Random.Range(0, enemyCreator.EnemyList().Count);
+        enemy = enemyCreator.EnemyList()[randomEnemyIndex];
+        enemyCreator.EnemyList().RemoveAt(randomEnemyIndex);
     }
 
     private bool ReadyToAttack()

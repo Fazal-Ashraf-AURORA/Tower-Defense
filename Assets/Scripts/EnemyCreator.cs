@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class EnemyCreator : MonoBehaviour
 {
-    public GameObject enemyprefab;
-    public int enemiesToSpawn = 4;
+    [SerializeField] private GameObject enemyprefab;
+    [SerializeField] private int enemiesToSpawn = 4;
 
 
-    public List<Transform> enemyList;
+   private List<Transform> enemyList = new List<Transform>();
 
 
     private void Start()
@@ -29,4 +29,6 @@ public class EnemyCreator : MonoBehaviour
             enemyList.Add(enemy.transform);
         }
     }
+
+   public List<Transform> EnemyList() => enemyList;
 }
