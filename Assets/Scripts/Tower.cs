@@ -6,7 +6,7 @@ public class Tower : MonoBehaviour
     public Transform towerHead;
     private Transform enemy;
 
-    public List<Transform> enemyList;
+    public EnemyCreator enemyCreator;
 
     [Header("Attack Details")]
     public float attackRange = 3.0f;  // attack range of the tower
@@ -42,7 +42,7 @@ public class Tower : MonoBehaviour
         float closestDistance = float.MaxValue;
         Transform closestEnemy = null;
 
-        foreach (Transform enemy in enemyList)
+        foreach (Transform enemy in enemyCreator.enemyList)
         {
             float distance = Vector3.Distance(enemy.position, transform.position);
 
@@ -55,7 +55,7 @@ public class Tower : MonoBehaviour
 
         if( closestEnemy != null )
         {
-            enemyList.Remove(closestEnemy);
+            enemyCreator.enemyList.Remove(closestEnemy);
         }
 
         return closestEnemy;
@@ -64,13 +64,13 @@ public class Tower : MonoBehaviour
 
     void FindRandomEnemy()
     {
-        if(enemyList.Count <= 0)
+        if(enemyCreator.enemyList.Count <= 0)
         {
           return;
         }
-        int randomEnemyIndex = Random.Range(0, enemyList.Count);
-        enemy = enemyList[randomEnemyIndex];
-        enemyList.RemoveAt(randomEnemyIndex);
+        int randomEnemyIndex = Random.Range(0, enemyCreator.enemyList.Count);
+        enemy = enemyCreator.enemyList[randomEnemyIndex];
+        enemyCreator.enemyList.RemoveAt(randomEnemyIndex);
     }
 
     private bool ReadyToAttack()
