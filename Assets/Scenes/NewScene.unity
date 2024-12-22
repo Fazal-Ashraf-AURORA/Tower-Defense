@@ -570,7 +570,7 @@ Transform:
   m_GameObject: {fileID: 156392129}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.54, y: 0, z: 5.94}
+  m_LocalPosition: {x: -6.41, y: 0, z: 5.97}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -758,7 +758,7 @@ Transform:
   m_GameObject: {fileID: 355532686}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.49, y: 0, z: 5.94}
+  m_LocalPosition: {x: -0.46, y: 0, z: 5.95}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -814,6 +814,82 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 355532686}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &431195050
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 431195053}
+  - component: {fileID: 431195052}
+  - component: {fileID: 431195051}
+  m_Layer: 0
+  m_Name: Enemy Fast
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &431195051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 431195050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73dc1678244d3ed44aafd9c11f6faea9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waypoint:
+  - {fileID: 871787681}
+  - {fileID: 156392130}
+  - {fileID: 355532687}
+  - {fileID: 859646446}
+  - {fileID: 1052470057}
+  - {fileID: 701382022}
+  turnSpeed: 10
+--- !u!195 &431195052
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 431195050}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.17
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 99
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 0.55
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!4 &431195053
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 431195050}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.048, y: 0.406, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2865693471777985303}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &477420928
 GameObject:
   m_ObjectHideFlags: 0
@@ -1276,7 +1352,7 @@ Transform:
   m_GameObject: {fileID: 701382021}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.52, y: 0, z: 6.04}
+  m_LocalPosition: {x: 5.52, y: 0, z: 6.26}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -1359,7 +1435,7 @@ Transform:
   m_GameObject: {fileID: 859646445}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.49, y: 0, z: 2.0900002}
+  m_LocalPosition: {x: -0.44, y: 0, z: 2.07}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -1442,7 +1518,7 @@ Transform:
   m_GameObject: {fileID: 871787680}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.54, y: 0, z: -1.97}
+  m_LocalPosition: {x: -6.416, y: 0, z: -1.927}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -1525,7 +1601,7 @@ Transform:
   m_GameObject: {fileID: 1052470056}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.52, y: 0, z: 2.0500002}
+  m_LocalPosition: {x: 5.49, y: 0, z: 2.1}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -2454,7 +2530,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.06666667
+  m_VoxelSize: 0.016666668
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 00f8d5c40ba60634a872eef80609c00a, type: 2}
   m_BuildHeightMesh: 0
@@ -2485,7 +2561,7 @@ Transform:
   m_GameObject: {fileID: 1642483228}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2, y: 0.406, z: 0}
+  m_LocalPosition: {x: 1.25, y: 0.406, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2511,6 +2587,7 @@ MonoBehaviour:
   - {fileID: 859646446}
   - {fileID: 1052470057}
   - {fileID: 701382022}
+  turnSpeed: 10
 --- !u!195 &1642483231
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2521,9 +2598,9 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.25
-  m_Speed: 1
+  m_Speed: 1.1
   m_Acceleration: 8
-  avoidancePriority: 50
+  avoidancePriority: 1
   m_AngularSpeed: 120
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
@@ -3931,6 +4008,7 @@ GameObject:
   - component: {fileID: 6646843950035859095}
   - component: {fileID: 4978764928218005923}
   - component: {fileID: 631796975509329116}
+  - component: {fileID: 6646843950035859096}
   m_Layer: 0
   m_Name: basic_enemy_wheels_front
   m_TagString: Untagged
@@ -4394,14 +4472,14 @@ Transform:
   m_GameObject: {fileID: 3210835272183564717}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.379, y: 0.39176905, z: 1.254}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1687830737008605679}
   - {fileID: 1955795993605030856}
   - {fileID: 2996798064742906057}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 431195053}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2907730876036260179
 GameObject:
@@ -6250,6 +6328,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 19784941308760517}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6646843950035859096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804105691546652460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8766828206c77734188745a6f3f8ae68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationVector: {x: 1, y: 0, z: 0}
+  rotationSpeed: 3.5
 --- !u!4 &6688944317732539851
 Transform:
   m_ObjectHideFlags: 0
@@ -6462,7 +6554,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: becbb4dde857e67428161d08a1fdbac9, type: 2}
+  - {fileID: 2100000, guid: cb7b67661138e734d84f264c74994a56, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6656,6 +6748,7 @@ GameObject:
   - component: {fileID: 2996798064742906057}
   - component: {fileID: 8335796675496278025}
   - component: {fileID: 8126872301806442757}
+  - component: {fileID: 8335796675496278026}
   m_Layer: 0
   m_Name: fast_enemy_wheels
   m_TagString: Untagged
@@ -7058,6 +7151,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7684747854715116288}
   m_Mesh: {fileID: 3549018140181674011, guid: a1d5df2d7cc32da498543ba155a3e0c9, type: 3}
+--- !u!114 &8335796675496278026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7684747854715116288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8766828206c77734188745a6f3f8ae68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationVector: {x: 1, y: 0, z: 0}
+  rotationSpeed: 8
 --- !u!1 &8419313672352684006
 GameObject:
   m_ObjectHideFlags: 0
@@ -7341,6 +7448,7 @@ GameObject:
   - component: {fileID: 4605840718744957631}
   - component: {fileID: 1877879605865858860}
   - component: {fileID: 5501617499393248835}
+  - component: {fileID: 9152589721989042430}
   m_Layer: 0
   m_Name: basic_enemy_wheels_back
   m_TagString: Untagged
@@ -7348,6 +7456,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &9152589721989042430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9152589721989042429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8766828206c77734188745a6f3f8ae68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationVector: {x: 1, y: 0, z: 0}
+  rotationSpeed: 3.5
 --- !u!23 &9188760036630515540
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -7425,7 +7547,7 @@ SceneRoots:
   - {fileID: 1899444786}
   - {fileID: 1488390569}
   - {fileID: 1642483229}
-  - {fileID: 2865693471777985303}
+  - {fileID: 431195053}
   - {fileID: 1583434816554497827}
   - {fileID: 3368498157128053090}
   - {fileID: 7477033370222058555}
