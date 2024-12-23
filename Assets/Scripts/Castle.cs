@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class PlayerCastle : MonoBehaviour
+public class Castle : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Enemy")
+        if (other.tag == "Enemy")
         {
             Destroy(other.gameObject);
         }

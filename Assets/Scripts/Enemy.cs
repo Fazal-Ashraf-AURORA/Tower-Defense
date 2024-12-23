@@ -26,7 +26,7 @@ public class Enemy : MonoBehaviour
         Facetarget(agent.steeringTarget);
 
         //check is the agent is close to the current waypoint target point
-        if(agent.remainingDistance  < 0.2f)
+        if (agent.remainingDistance < 0.5f)
         {
             //set destination to next waypoint
             agent.SetDestination(GetNextWaypoint());
@@ -43,7 +43,7 @@ public class Enemy : MonoBehaviour
         Quaternion newRotation = Quaternion.LookRotation(directionToTarget);
 
         //Smoothly rotates from current rotation to new rotation with defined turnSpeed// Time.deltaTime makes it framerate independent
-        transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, turnSpeed* Time.deltaTime);
+        transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, turnSpeed * Time.deltaTime);
     }
 
     private Vector3 GetNextWaypoint()
