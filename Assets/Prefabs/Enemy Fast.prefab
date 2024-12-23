@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3605463354907305623}
   - component: {fileID: 2972060840546159655}
   - component: {fileID: 37859621692824377}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy Fast
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -70,15 +70,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73dc1678244d3ed44aafd9c11f6faea9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waypoint:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  waypoints: []
   turnSpeed: 10
 --- !u!65 &2972060840546159655
 BoxCollider:
