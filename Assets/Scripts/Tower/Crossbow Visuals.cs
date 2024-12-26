@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class CrossbowVisuals : MonoBehaviour
 {
-    private TowerCrossBow myTower;
     private Enemy myEnemy;
 
     [SerializeField] private LineRenderer attackVisuals;
@@ -53,7 +52,6 @@ public class CrossbowVisuals : MonoBehaviour
 
     private void Awake()
     {
-        myTower = GetComponent<TowerCrossBow>();
         materialInstance = new Material(meshRenderer.material);
         meshRenderer.material = materialInstance;
         UpdateMaterialOnLineRenders();
@@ -65,11 +63,13 @@ public class CrossbowVisuals : MonoBehaviour
     {
         UpdateEmissionColor();
         UpdateBowStrings();
+        UpdateAttackVisualsIfNeeded();
+    }
 
-        if(attackVisuals.enabled && myEnemy != null)
-        {
+    private void UpdateAttackVisualsIfNeeded()
+    {
+        if (attackVisuals.enabled && myEnemy != null)
             attackVisuals.SetPosition(1, myEnemy.CenterPoint());
-        }
     }
 
     private void UpdateMaterialOnLineRenders()
@@ -105,26 +105,21 @@ public class CrossbowVisuals : MonoBehaviour
         StartCoroutine(UpdateRotorPosition(newDuration));
     }
 
-    public void PlayAttackVFX(Vector3 startPoint, Vector3 endPoint)
+    public void PlayAttackVFX(Vector3 startPoint, Vector3 endPoint, Enemy newEnemy)
     {
-        StartCoroutine(VFXCoroutine(startPoint, endPoint));
+        StartCoroutine(VFXCoroutine(startPoint, endPoint, newEnemy));
     }
 
-    private IEnumerator VFXCoroutine(Vector3 startPoint, Vector3 endPoint)
+    private IEnumerator VFXCoroutine(Vector3 startPoint, Vector3 endPoint, Enemy newEnemy)
     {
-
-        //myTower.EnableRotation(false);
-        myEnemy = myTower.currentEnemy;
+        myEnemy = newEnemy;
 
         attackVisuals.enabled = true;
         attackVisuals.SetPosition(0, startPoint);
         attackVisuals.SetPosition(1, endPoint);
 
         yield return new WaitForSeconds(attackVisualDuration);
-
         attackVisuals.enabled = false;
-
-        //myTower.EnableRotation(true);
     }
 
     private IEnumerator ChangeEmission(float duration)

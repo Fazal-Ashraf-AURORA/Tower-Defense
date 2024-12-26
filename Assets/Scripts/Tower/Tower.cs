@@ -40,13 +40,17 @@ public class Tower : MonoBehaviour
 
         if (CanAttack())
             Attack();
+    
+        LooseTargetIfNeeded();
+        RotateTowardsEnemy();
+    }
 
+    private void LooseTargetIfNeeded()
+    {
         if (Vector3.Distance(currentEnemy.CenterPoint(), towerHead.position) > attackRange)
         {
             currentEnemy = null;
         }
-
-        RotateTowardsEnemy();
     }
 
     private void UpdateTargetIfNeeded()
@@ -63,7 +67,7 @@ public class Tower : MonoBehaviour
 
     protected virtual void Attack()
     {
-        Debug.Log("AttackedEnemy at" + Time.time);
+        //Debug.Log("AttackedEnemy at" + Time.time);
     }
 
     protected bool CanAttack()
