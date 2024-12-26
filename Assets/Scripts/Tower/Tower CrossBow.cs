@@ -8,18 +8,22 @@ public class TowerCrossBow : Tower
     [SerializeField] private Transform firePoint;
     [SerializeField]private int damage;
 
+    // Define the layer mask
+    int layerMask ; 
+
     protected override void Awake()
     {
         base.Awake();
 
         visuals = GetComponent<CrossbowVisuals>();
+        layerMask = LayerMask.GetMask(whatIsEnemy.ToString());// Replace "EnemyLayer" with the name of your desired layer
     }
 
     protected override void Attack()
     {
         Vector3 directionToEnemy = DirectionToEnemyFrom(firePoint);
 
-        if (Physics.Raycast(firePoint.position, directionToEnemy, out RaycastHit hitInfo, Mathf.Infinity))
+        if (Physics.Raycast(firePoint.position, directionToEnemy, out RaycastHit hitInfo, Mathf.Infinity/*, layerMask*/))
         {
             towerHead.forward = directionToEnemy;
 

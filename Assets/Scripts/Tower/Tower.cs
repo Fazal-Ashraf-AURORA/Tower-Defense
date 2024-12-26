@@ -5,7 +5,6 @@ public class Tower : MonoBehaviour
 {
     public Transform currentEnemy;
 
-
     [SerializeField] protected float attackCooldown = 1.0f;
     protected float lastTimeAttacked;
 
@@ -17,10 +16,7 @@ public class Tower : MonoBehaviour
     [SerializeField] protected float attackRange = 2.5f;
     [SerializeField] protected LayerMask whatIsEnemy;
 
-    protected virtual void Awake()
-    {
-        
-    }
+    protected virtual void Awake() { }
 
     protected virtual void Update()
     {
@@ -61,22 +57,40 @@ public class Tower : MonoBehaviour
 
     protected Transform FindRandomEnemyWithInRange()
     {
-        List<Transform> possibleTargets = new List<Transform>();
+        List<Enemy> possibleTargets = new List<Enemy>();
         Collider[] enemiesAround = Physics.OverlapSphere(transform.position, attackRange, whatIsEnemy);
 
         foreach (var enemy in enemiesAround)
         {
-            possibleTargets.Add(enemy.transform);
+            Enemy newEnemy = enemy.GetComponent<Enemy>();
+
+            possibleTargets.Add(newEnemy);
         }
 
-        int randomIndex = Random.Range(0, possibleTargets.Count);
+        Enemy newTarget = GetMostAdvancedEnemy(possibleTargets);
 
-        if (possibleTargets.Count <= 0)
+        if (newTarget != null)
+            return newTarget.transform;
+        
+        return null;
+    }
+
+    private Enemy GetMostAdvancedEnemy(List<Enemy> targets)
+    {
+        Enemy mostAdvancedEnemy = null;
+        float minRemainingDistance = float.MaxValue;
+
+        foreach (Enemy enemy in targets)
         {
-            return null;
-        }
+            float remainingDistance = enemy.DistanceToFinishLine();
 
-        return possibleTargets[randomIndex];
+            if (remainingDistance < minRemainingDistance)
+            {
+                minRemainingDistance = remainingDistance;
+                mostAdvancedEnemy = enemy;
+            }
+        }
+        return mostAdvancedEnemy;
     }
 
     public void EnableRotation(bool enable)
@@ -86,7 +100,7 @@ public class Tower : MonoBehaviour
 
     protected virtual void RotateTowardsEnemy()
     {
-        if(canRotate == false) return;
+        if (canRotate == false) return;
 
         if (currentEnemy == null)
         { return; }

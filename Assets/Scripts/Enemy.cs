@@ -5,12 +5,14 @@ public class Enemy : MonoBehaviour, IDamagable
 {
     private NavMeshAgent agent;
 
-    public int healthPoints = 4; 
+    public int healthPoints = 4;
 
     [Header("Movement")]
     [SerializeField] private Transform[] waypoints;
     [SerializeField] private float turnSpeed = 10;
     private int waypointIndex;
+
+    private float totalDistance;
 
     private void Awake()
     {
@@ -22,8 +24,8 @@ public class Enemy : MonoBehaviour, IDamagable
     private void Start()
     {
         waypoints = FindAnyObjectByType<WaypointManager>().GetWaypoints();
+        CollectTotalDistance();
     }
-
     private void Update()
     {
         Facetarget(agent.steeringTarget);
@@ -33,6 +35,17 @@ public class Enemy : MonoBehaviour, IDamagable
         {
             //set destination to next waypoint
             agent.SetDestination(GetNextWaypoint());
+        }
+    }
+
+    public float DistanceToFinishLine() => totalDistance + agent.remainingDistance;
+
+    private void CollectTotalDistance()
+    {
+        for (int i = 0; i < waypoints.Length - 1; i++)
+        {
+            float distance = Vector3.Distance(waypoints[i].position, waypoints[i + 1].position);
+            totalDistance += distance;
         }
     }
 
@@ -51,14 +64,31 @@ public class Enemy : MonoBehaviour, IDamagable
 
     private Vector3 GetNextWaypoint()
     {
+        //check if the waypoint index is beyond the last waypoint
         if (waypointIndex >= waypoints.Length)
         {
+            //if true, return the agent's current position, affectively stopping it
+            //uncomment the line below to loop the waypoints
+            //waypointIndex = 0;
             return transform.position;
         }
 
+        //get the current target point form the waypoints array
         Vector3 targetWaypoint = waypoints[waypointIndex].position;
+
+        //if this is not the first waypoint, calculate the distance from the previous waypoint
+        if (waypointIndex > 0)
+        {
+            float distance = Vector3.Distance(waypoints[waypointIndex].position, waypoints[waypointIndex - 1].position);
+
+            //subtract this distance from the total distance
+            totalDistance -= distance;
+        }
+
+        //increament the waypoint index to move to the next waypoint on the next call
         waypointIndex++;
 
+        //return the current target point
         return targetWaypoint;
     }
 
@@ -66,7 +96,7 @@ public class Enemy : MonoBehaviour, IDamagable
     {
         healthPoints = healthPoints - damage;
 
-        if(healthPoints <= 0)
+        if (healthPoints <= 0)
         {
             Destroy(gameObject);
         }
