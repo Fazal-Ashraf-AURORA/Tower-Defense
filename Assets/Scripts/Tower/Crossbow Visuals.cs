@@ -20,21 +20,69 @@ public class CrossbowVisuals : MonoBehaviour
     [SerializeField] private Color startColor;
     [SerializeField] private Color endColor;
 
+    [Header("Front Glow String")]
+    [SerializeField] private LineRenderer frontString_L;
+    [SerializeField] private LineRenderer frontString_R;
+
+    [Space]
+    [SerializeField] private Transform frontStartPoint_L;
+    [SerializeField] private Transform frontStartPoint_R;
+    [SerializeField] private Transform frontEndPoint_L;
+    [SerializeField] private Transform frontEndPoint_R;
+
+
+    [Header("Back Glow String")]
+    [SerializeField] private LineRenderer backString_L;
+    [SerializeField] private LineRenderer backString_R;
+
+    [Space]
+    [SerializeField] private Transform backStartPoint_L;
+    [SerializeField] private Transform backStartPoint_R;
+    [SerializeField] private Transform backEndPoint_L;
+    [SerializeField] private Transform backEndPoint_R;
+
+    //for rotor movement
+    [Header("Rotor Visuals")]
+    [SerializeField] private Transform rotor;
+    [SerializeField] private Transform rotorUnloaded;
+    [SerializeField] private Transform rotorLoaded;
+
+    [SerializeField] private LineRenderer[] lineRenderers;
+
 
     private void Awake()
     {
         myTower = GetComponent<TowerCrossBow>();
-
         materialInstance = new Material(meshRenderer.material);
-
         meshRenderer.material = materialInstance;
+        UpdateMaterialOnLineRenders();
 
         StartCoroutine(ChangeEmission(1));
+        StartCoroutine(UpdateRotorPosition(1));
     }
-
     private void Update()
     {
         UpdateEmissionColor();
+        UpdateBowStrings();
+    }
+
+    private void UpdateMaterialOnLineRenders()
+    {
+        foreach (var lr in lineRenderers)
+        {
+            lr.material = materialInstance;
+        }
+    }
+
+    private void UpdateBowStrings()
+    {
+        //for front strings
+        UpdateStringVisual(frontString_L, frontStartPoint_L, frontEndPoint_L);
+        UpdateStringVisual(frontString_R, frontStartPoint_R, frontEndPoint_R);
+
+        //for back strings
+        UpdateStringVisual(backString_L, backStartPoint_L, backEndPoint_L);
+        UpdateStringVisual(backString_R, backStartPoint_R, backEndPoint_R);
     }
 
     private void UpdateEmissionColor()
@@ -46,7 +94,9 @@ public class CrossbowVisuals : MonoBehaviour
 
     public void PlayReloadVFX(float duration)
     {
-        StartCoroutine(ChangeEmission(duration / 2));
+        float newDuration = duration / 2;
+        StartCoroutine(ChangeEmission(newDuration));
+        StartCoroutine(UpdateRotorPosition(newDuration));
     }
 
     public void PlayAttackVFX(Vector3 startPoint, Vector3 endPoint)
@@ -84,5 +134,25 @@ public class CrossbowVisuals : MonoBehaviour
         }
 
         currentIntensity = maxIntensity;
+    }
+
+    private IEnumerator UpdateRotorPosition(float duration)
+    {
+        float startTime = Time.time;
+
+        while (Time.time - startTime < duration)
+        {
+            float tValue = (Time.time - startTime) / duration;
+            rotor.position = Vector3.Lerp(rotorUnloaded.position, rotorLoaded.position, tValue);
+            yield return null;
+        }
+
+        rotor.position = rotorLoaded.position;
+    }
+
+    private void UpdateStringVisual(LineRenderer lineRenderer, Transform startPoint, Transform endPoint)
+    {
+        lineRenderer.SetPosition(0, startPoint.position);
+        lineRenderer.SetPosition(1, endPoint.position);
     }
 }
