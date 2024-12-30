@@ -10,50 +10,16 @@ public class WaveDetails
 
 public class EnemySpawnManager : MonoBehaviour
 {
+    public List<EnemyPortal> enemyPortals;
     [SerializeField] private WaveDetails currentWave;
-
-    [Header("Spawn Details")]
-    [SerializeField] Transform spawnPoint;
-    [SerializeField] private float spawnCooldown;
-    private float spawnTimer;
-
-    private List<GameObject> enemiesToCreate;
 
     [Header("Enemy Prefabs")]
     [SerializeField] GameObject enemyBasicPrefab;
     [SerializeField] GameObject enemyFastPrefab;
 
-    private void Start()
+    private void Awake()
     {
-        enemiesToCreate = NewEnemyWave();
-    }
-
-    private void Update()
-    {
-        spawnTimer -= Time.deltaTime;
-
-        if (spawnTimer <= 0 && enemiesToCreate.Count > 0)
-        {
-            CreateEnemy();
-            spawnTimer = spawnCooldown;
-        }
-    }
-
-
-    private void CreateEnemy()
-    {
-        GameObject randomEnemy = GetRandomEnemy();
-        GameObject enemy = Instantiate(randomEnemy, spawnPoint.position, Quaternion.identity);
-    }
-
-    private GameObject GetRandomEnemy()
-    {
-        int randomIndex = Random.Range(0, enemiesToCreate.Count);
-        GameObject choosenEnemy = enemiesToCreate[randomIndex];
-
-        enemiesToCreate.Remove(choosenEnemy);
-
-        return choosenEnemy;
+        enemyPortals = new List<EnemyPortal>(FindObjectsOfType<EnemyPortal>());
     }
 
     private List<GameObject> NewEnemyWave()

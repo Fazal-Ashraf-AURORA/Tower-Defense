@@ -125,10 +125,36 @@ public class TileSlotEditor : Editor
             }
         }
 
-        //for Tile Road
+        //for Tile Outer Corner
         if (GUILayout.Button("Outter Corner", GUILayout.Width(twoButtonWidth)))
         {
             GameObject newTile = FindAnyObjectByType<TileSetHolder>().tileOuterCorner;
+
+            foreach (var targetTile in targets)
+            {
+                ((TileSlot)targetTile).SwitchTile(newTile);
+            }
+        }
+
+        GUILayout.EndHorizontal();
+
+        GUILayout.BeginHorizontal();
+
+        //for Tile Inner Corner Small
+        if (GUILayout.Button("Inner Corner Small", GUILayout.Width(twoButtonWidth)))
+        {
+            GameObject newTile = FindAnyObjectByType<TileSetHolder>().tileInnerCornerSmall;
+
+            foreach (var targetTile in targets)
+            {
+                ((TileSlot)targetTile).SwitchTile(newTile);
+            }
+        }
+
+        //for Tile Outer Corner Small
+        if (GUILayout.Button("Outter Corner Small", GUILayout.Width(twoButtonWidth)))
+        {
+            GameObject newTile = FindAnyObjectByType<TileSetHolder>().tileOuterCornerSmall;
 
             foreach (var targetTile in targets)
             {

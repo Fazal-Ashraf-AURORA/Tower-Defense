@@ -13,6 +13,7 @@ public class GridBuilder : MonoBehaviour
     [ContextMenu("Build Grid")]
     private void BuildGrid()
     {
+        ClearGrid();
         createdTiles = new List<GameObject>();
 
         for (int x = 0; x < gridLength; x++)
@@ -23,7 +24,7 @@ public class GridBuilder : MonoBehaviour
             }
         }
     }
-
+     
     [ContextMenu("Clear Grid")]
     private void ClearGrid()
     {

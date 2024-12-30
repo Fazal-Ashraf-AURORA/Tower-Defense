@@ -10,7 +10,9 @@ public class TileSetHolder : MonoBehaviour
 
     [Header("Corners")]
     public GameObject tileInnerCorner;
+    public GameObject tileInnerCornerSmall;
     public GameObject tileOuterCorner;
+    public GameObject tileOuterCornerSmall;
 
     [Header("Hills")]
     public GameObject tileHill1;
