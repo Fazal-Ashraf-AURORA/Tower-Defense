@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEngine;
 
@@ -241,3 +242,4 @@ public class TileSlotEditor : Editor
         GUILayout.EndHorizontal();
     }
 }
+#endif

@@ -1,32 +1,48 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyPortal : MonoBehaviour
 {
-    [Header("Spawn Details")]
-    [SerializeField] Transform spawnPoint;
     [SerializeField] private float spawnCooldown;
     private float spawnTimer;
 
-    public List<GameObject> enemiesToCreate;
+    [Space]
+
+    [SerializeField] private List<Waypoint> waypointList;
+
+    private List<GameObject> enemiesToCreate = new List<GameObject>();
+
+    private void Awake()
+    {
+        CollectWaypoints();
+    }
 
     private void Update()
     {
-        //spawnTimer -= Time.deltaTime;
-
-        //if (spawnTimer <= 0 && enemiesToCreate.Count > 0)
-        //{
-        //    CreateEnemy();
-        //    spawnTimer = spawnCooldown;
-        //}
+        if(CanMakeNewEnemies())
+            CreateEnemy();
     }
 
+    private bool CanMakeNewEnemies()
+    {
+        spawnTimer -= Time.deltaTime;
+
+        if(spawnTimer <= 0 && enemiesToCreate.Count > 0)
+        {
+            spawnTimer = spawnCooldown;
+            return true;
+        }
+        return false;
+    }
 
     private void CreateEnemy()
     {
         GameObject randomEnemy = GetRandomEnemy();
-        GameObject enemy = Instantiate(randomEnemy, spawnPoint.position, Quaternion.identity);
+        GameObject enemy = Instantiate(randomEnemy, transform.position, Quaternion.identity);
+
+        Enemy enemyScript = enemy.GetComponent<Enemy>();
+
+        enemyScript.SetupEnemy(waypointList);
     }
 
     private GameObject GetRandomEnemy()
@@ -39,5 +55,19 @@ public class EnemyPortal : MonoBehaviour
         return choosenEnemy;
     }
 
-    public List<GameObject> GetEnemyList() => enemiesToCreate;
+    public void AddEnemy(GameObject enemyToAdd) => enemiesToCreate.Add(enemyToAdd);
+
+    [ContextMenu("Collect Waypoints")]
+    private void CollectWaypoints()
+    {
+        waypointList = new List<Waypoint>();
+
+        foreach (Transform child in transform)
+        {
+            Waypoint waypoint = child.GetComponent<Waypoint>();
+
+            if (waypoint != null)
+                waypointList.Add(waypoint);
+        }
+    }
 }

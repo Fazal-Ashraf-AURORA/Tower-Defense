@@ -22,6 +22,31 @@ public class EnemySpawnManager : MonoBehaviour
         enemyPortals = new List<EnemyPortal>(FindObjectsOfType<EnemyPortal>());
     }
 
+    private void Start()
+    {
+        SetupNextWave();
+    }
+
+    [ContextMenu("Setup Next Wave")]
+    private void SetupNextWave()
+    {
+        List<GameObject> newEnemies = NewEnemyWave();
+        int portalIndex = 0;
+
+        for (int i = 0; i < newEnemies.Count; i++)
+        {
+            GameObject enemyToAdd = newEnemies[i];
+            EnemyPortal portalToRecieveEnemy = enemyPortals[portalIndex];
+
+            portalToRecieveEnemy.AddEnemy(enemyToAdd);
+
+            portalIndex++;
+
+            if(portalIndex >= enemyPortals.Count)
+                portalIndex = 0;
+        }
+    }
+
     private List<GameObject> NewEnemyWave()
     {
         List<GameObject> newEnemyList = new List<GameObject>();

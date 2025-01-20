@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -12,9 +13,10 @@ public class Enemy : MonoBehaviour, IDamagable
     public int healthPoints = 4;
 
     [Header("Movement")]
-    [SerializeField] private Transform[] waypoints;
+    [SerializeField] private List<Transform> myWaypoints;
     [SerializeField] private float turnSpeed = 10;
-    private int waypointIndex;
+    private int nextWaypointIndex;
+    private int currentWaypointIndex;
 
     private float totalDistance;
 
@@ -25,30 +27,54 @@ public class Enemy : MonoBehaviour, IDamagable
         agent.avoidancePriority = Mathf.RoundToInt(agent.speed * 10);
     }
 
-    private void Start()
+    public void SetupEnemy(List<Waypoint> newWaypoints)
     {
-        waypoints = FindAnyObjectByType<WaypointManager>().GetWaypoints();
+        myWaypoints = new List<Transform>(); 
+
+        foreach (var waypoint in newWaypoints)
+        {
+            myWaypoints.Add(waypoint.transform);
+        }
+
         CollectTotalDistance();
     }
+
     private void Update()
     {
         Facetarget(agent.steeringTarget);
 
         //check is the agent is close to the current waypoint target point
-        if (agent.remainingDistance < 0.5f)
+        if (ShouldChangeWaypoint())
         {
             //set destination to next waypoint
             agent.SetDestination(GetNextWaypoint());
         }
     }
 
+    private bool ShouldChangeWaypoint()
+    {
+        if(nextWaypointIndex >= myWaypoints.Count)
+            return false; 
+
+        if(agent.remainingDistance < 0.5f)
+            return true;
+
+        Vector3 currentWaypoint = myWaypoints[currentWaypointIndex].position;
+        Vector3 nextWaypoint = myWaypoints[nextWaypointIndex].position;
+
+        float distanceToNextWaypoint = Vector3.Distance(transform.position, nextWaypoint);
+        float distanceBetweenPoints = Vector3.Distance(currentWaypoint, nextWaypoint);
+
+        return distanceBetweenPoints < distanceToNextWaypoint;
+    }
+
     public float DistanceToFinishLine() => totalDistance + agent.remainingDistance;
 
     private void CollectTotalDistance()
     {
-        for (int i = 0; i < waypoints.Length - 1; i++)
+        for (int i = 0; i < myWaypoints.Count - 1; i++)
         {
-            float distance = Vector3.Distance(waypoints[i].position, waypoints[i + 1].position);
+            float distance = Vector3.Distance(myWaypoints[i].position, myWaypoints[i + 1].position);
             totalDistance += distance;
         }
     }
@@ -69,7 +95,7 @@ public class Enemy : MonoBehaviour, IDamagable
     private Vector3 GetNextWaypoint()
     {
         //check if the waypoint index is beyond the last waypoint
-        if (waypointIndex >= waypoints.Length)
+        if (nextWaypointIndex >= myWaypoints.Count)
         {
             //if true, return the agent's current position, affectively stopping it
             //uncomment the line below to loop the waypoints
@@ -78,19 +104,20 @@ public class Enemy : MonoBehaviour, IDamagable
         }
 
         //get the current target point form the waypoints array
-        Vector3 targetWaypoint = waypoints[waypointIndex].position;
+        Vector3 targetWaypoint = myWaypoints[nextWaypointIndex].position;
 
         //if this is not the first waypoint, calculate the distance from the previous waypoint
-        if (waypointIndex > 0)
+        if (nextWaypointIndex > 0)
         {
-            float distance = Vector3.Distance(waypoints[waypointIndex].position, waypoints[waypointIndex - 1].position);
+            float distance = Vector3.Distance(myWaypoints[nextWaypointIndex].position, myWaypoints[nextWaypointIndex - 1].position);
 
             //subtract this distance from the total distance
             totalDistance -= distance;
         }
 
         //increament the waypoint index to move to the next waypoint on the next call
-        waypointIndex++;
+        nextWaypointIndex++;
+        currentWaypointIndex = nextWaypointIndex - 1; //Assign current waypoint index
 
         //return the current target point
         return targetWaypoint;

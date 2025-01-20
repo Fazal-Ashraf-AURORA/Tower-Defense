@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5669307688248372511}
   - component: {fileID: 2817054506624529996}
   - component: {fileID: 5172953386503636048}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Enemy Basic
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -49,6 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73dc1678244d3ed44aafd9c11f6faea9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyType: 0
   centerPoint: {fileID: 8732245050676659540}
   healthPoints: 6
   waypoints: []
