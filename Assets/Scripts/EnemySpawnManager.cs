@@ -10,12 +10,14 @@ public class WaveDetails
 
 public class EnemySpawnManager : MonoBehaviour
 {
-    public List<EnemyPortal> enemyPortals;
-    [SerializeField] private WaveDetails currentWave;
+    [SerializeField] private WaveDetails[] levelWaves;
+    private int waveIndex;
 
     [Header("Enemy Prefabs")]
     [SerializeField] GameObject enemyBasicPrefab;
     [SerializeField] GameObject enemyFastPrefab;
+
+    private List<EnemyPortal> enemyPortals;
 
     private void Awake()
     {
@@ -33,6 +35,12 @@ public class EnemySpawnManager : MonoBehaviour
         List<GameObject> newEnemies = NewEnemyWave();
         int portalIndex = 0;
 
+        if(newEnemies == null)
+        {
+            Debug.Log("Have no waves to setup");
+            return; 
+        }
+
         for (int i = 0; i < newEnemies.Count; i++)
         {
             GameObject enemyToAdd = newEnemies[i];
@@ -49,17 +57,25 @@ public class EnemySpawnManager : MonoBehaviour
 
     private List<GameObject> NewEnemyWave()
     {
+        if(waveIndex >= levelWaves.Length)
+        {
+            // Check if all waves are completed; return null if no more waves are available
+            return null;
+        }
+
         List<GameObject> newEnemyList = new List<GameObject>();
 
-        for (int i = 0; i < currentWave.basicEnemy; i++)
+        for (int i = 0; i < levelWaves[waveIndex].basicEnemy; i++)
         {
             newEnemyList.Add(enemyBasicPrefab);
         }
 
-        for (int i = 0; i < currentWave.fastEnemy; i++)
+        for (int i = 0; i < levelWaves[waveIndex].fastEnemy; i++)
         {
             newEnemyList.Add(enemyFastPrefab);
         }
+
+        waveIndex++;
 
         return newEnemyList;
     }
