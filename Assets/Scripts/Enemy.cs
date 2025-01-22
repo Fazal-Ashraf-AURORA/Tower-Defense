@@ -5,6 +5,7 @@ using UnityEngine.AI;
 public enum EnemyType { Basic, Fast, None}
 public class Enemy : MonoBehaviour, IDamagable
 {
+    private EnemyPortal myPortal;
     private NavMeshAgent agent;
 
     [SerializeField] private EnemyType enemyType;
@@ -27,7 +28,7 @@ public class Enemy : MonoBehaviour, IDamagable
         agent.avoidancePriority = Mathf.RoundToInt(agent.speed * 10);
     }
 
-    public void SetupEnemy(List<Waypoint> newWaypoints)
+    public void SetupEnemy(List<Waypoint> newWaypoints, EnemyPortal myNewPortal)
     {
         myWaypoints = new List<Transform>(); 
 
@@ -37,6 +38,8 @@ public class Enemy : MonoBehaviour, IDamagable
         }
 
         CollectTotalDistance();
+
+        myPortal = myNewPortal;
     }
 
     private void Update()
@@ -133,7 +136,13 @@ public class Enemy : MonoBehaviour, IDamagable
 
         if (healthPoints <= 0)
         {
-            Destroy(gameObject);
+            Die();
         }
+    }
+
+    private void Die()
+    {
+        myPortal.RemoveActiveEnemy(gameObject);
+        Destroy(gameObject);
     }
 }

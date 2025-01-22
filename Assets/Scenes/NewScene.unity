@@ -48715,7 +48715,7 @@ GameObject:
   - component: {fileID: 1898973947}
   - component: {fileID: 1898973946}
   m_Layer: 0
-  m_Name: Enemy Spawn Manager
+  m_Name: Enemy Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48733,10 +48733,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d75c20b60d1bf84094c11a12822b906, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPortals: []
-  currentWave:
-    basicEnemy: 15
-    fastEnemy: 4
+  waveCompleted: 0
+  timeBetweenWaves: 5
+  waveTimer: 0
+  levelWaves:
+  - basicEnemy: 0
+    fastEnemy: 2
+  - basicEnemy: 0
+    fastEnemy: 5
+  - basicEnemy: 0
+    fastEnemy: 10
   enemyBasicPrefab: {fileID: 385412708058643889, guid: 1bb37807d41c65e46a5e609c9a6e587c,
     type: 3}
   enemyFastPrefab: {fileID: 3177990080526078890, guid: d00538cb54ecc1d4ea427ce775f8c4a5,
