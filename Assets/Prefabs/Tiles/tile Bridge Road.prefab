@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3114035907215185484}
   - component: {fileID: 3509761138016259736}
   - component: {fileID: 4954469560180531210}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: tile Bridge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,7 +118,7 @@ GameObject:
   - component: {fileID: 6048722541921160538}
   - component: {fileID: 1002294160624020238}
   - component: {fileID: 7798601935180606194}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: tile Bridge Road
   m_TagString: Untagged
   m_Icon: {fileID: 0}

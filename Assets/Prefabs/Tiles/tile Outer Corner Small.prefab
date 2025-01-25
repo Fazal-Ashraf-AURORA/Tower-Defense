@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4299016934840400024}
   - component: {fileID: 850960431027701792}
   - component: {fileID: 1433051812701166555}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: tile Outter Corner Road
   m_TagString: Untagged
   m_Icon: {fileID: 0}
