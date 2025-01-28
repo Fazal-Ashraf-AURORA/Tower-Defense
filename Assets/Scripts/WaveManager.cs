@@ -13,7 +13,7 @@ public class WaveDetails
 public class WaveManager : MonoBehaviour
 {
     [SerializeField] private GridBuilder currentGrid;
-    public bool waveCompleted;
+    public bool waveCompleted = false;
 
     public float timeBetweenWaves = 10;
     public float waveTimer;
@@ -49,10 +49,10 @@ public class WaveManager : MonoBehaviour
 
     private void HandleWaveCompletion()
     {
-        if(ReadyToCheck() == false)
+        if (ReadyToCheck() == false)
             return;
 
-        if (waveCompleted == false && AllEnemiesDefeated())
+        if (waveCompleted == false && AllEnemiesDefeated()) // this line is causing wave bug
         {
             CheckForNewLevelLayout();
 
@@ -68,13 +68,15 @@ public class WaveManager : MonoBehaviour
             waveTimer -= Time.deltaTime;
 
             if (waveTimer <= 0)
+            {
                 SetupNextWave();
+            }
         }
     }
 
     public void ForceNextWave()
     {
-        if(AllEnemiesDefeated() == false)
+        if (AllEnemiesDefeated() == false)
         {
             Debug.LogWarning("Can't force while there is enemies in the game!");
             return;
@@ -89,10 +91,10 @@ public class WaveManager : MonoBehaviour
         List<GameObject> newEnemies = NewEnemyWave();
         int portalIndex = 0;
 
-        if(newEnemies == null)
+        if (newEnemies == null)
         {
             Debug.Log("Have no waves to setup");
-            return; 
+            return;
         }
 
         for (int i = 0; i < newEnemies.Count; i++)
@@ -104,7 +106,7 @@ public class WaveManager : MonoBehaviour
 
             portalIndex++;
 
-            if(portalIndex >= enemyPortals.Count)
+            if (portalIndex >= enemyPortals.Count)
                 portalIndex = 0;
         }
 
@@ -113,7 +115,7 @@ public class WaveManager : MonoBehaviour
 
     private List<GameObject> NewEnemyWave()
     {
-        if(waveIndex >= levelWaves.Length)
+        if (waveIndex >= levelWaves.Length)
         {
             // Check if all waves are completed; return null if no more waves are available
             return null;
@@ -138,17 +140,17 @@ public class WaveManager : MonoBehaviour
 
     private void CheckForNewLevelLayout()
     {
-        if(waveIndex >= levelWaves.Length)
+        if (waveIndex >= levelWaves.Length)
             return;
 
         WaveDetails nextWave = levelWaves[waveIndex];
 
-        if(nextWave.nextGrid != null)
+        if (nextWave.nextGrid != null)
         {
             Debug.Log("Level Should Be Updated!");
 
             UpdateLevelTiles(nextWave.nextGrid);
-            EnableNewPortals(nextWave.newPortals );
+            EnableNewPortals(nextWave.newPortals);
         }
 
         currentGrid.UpdateNavMesh();
@@ -162,11 +164,11 @@ public class WaveManager : MonoBehaviour
         for (int i = 0; i < grid.Count; i++)
         {
             TileSlot currentTile = grid[i].GetComponent<TileSlot>();
-            TileSlot newTile = newGrid[i].GetComponent<TileSlot>(); 
+            TileSlot newTile = newGrid[i].GetComponent<TileSlot>();
 
             bool shouldBeUpdated = currentTile.GetMesh() != newTile.GetMesh() || currentTile.GetMaterial() != newTile.GetMaterial() || currentTile.GetAllChildren().Count != newTile.GetAllChildren().Count || currentTile.transform.rotation != newTile.transform.rotation;
 
-            if(shouldBeUpdated)
+            if (shouldBeUpdated)
             {
                 currentTile.gameObject.SetActive(false);
 
@@ -190,9 +192,9 @@ public class WaveManager : MonoBehaviour
 
     private bool AllEnemiesDefeated()
     {
-        foreach(EnemyPortal portal in enemyPortals)
+        foreach (EnemyPortal portal in enemyPortals)
         {
-            if(portal.GetActiveEnemies().Count > 0)
+            if (portal.GetActiveEnemies().Count > 0)
                 return false;
         }
 
@@ -201,7 +203,7 @@ public class WaveManager : MonoBehaviour
 
     private bool ReadyToCheck()
     {
-        if(Time.time >= nextCheckTime)
+        if (Time.time >= nextCheckTime)
         {
             nextCheckTime = Time.time + checkInterval;
             return true;
