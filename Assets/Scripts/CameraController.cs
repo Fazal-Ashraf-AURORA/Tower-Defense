@@ -59,8 +59,6 @@ public class CameraController : MonoBehaviour
         focusPoint.position = transform.position + (transform.forward * GetFocusPointDistance());
     }
 
-    
-
     private void HandleZoom()
     {
         float scroll = Input.GetAxis("Mouse ScrollWheel");

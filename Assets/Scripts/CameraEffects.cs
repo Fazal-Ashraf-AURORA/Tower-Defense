@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraEffects : MonoBehaviour
@@ -12,6 +10,12 @@ public class CameraEffects : MonoBehaviour
     [Space]
     [SerializeField] private Vector3 inGamePosition;
     [SerializeField] private Quaternion inGameRotation;
+
+    [Header("ScreenShake Details")]
+    [Range(0.01f, 0.5f)]
+    [SerializeField] private float shakeMagnitude;
+    [Range(0.1f, 3f)]
+    [SerializeField] private float shakeDuration;
 
     private void Awake()
     {
@@ -30,18 +34,25 @@ public class CameraEffects : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
             SwitchToGameView();
+
+        if (Input.GetKeyDown(KeyCode.V))
+            ScreenShake(shakeDuration, shakeMagnitude);
+    }
+
+    public void ScreenShake(float newDuration, float newMagnitude)
+    {
+        StartCoroutine(ScreenShakeFX(newDuration,newMagnitude));
+    }
+    private void SwitchToMenuView()
+    {
+        StartCoroutine(ChangePositionAndRotation(inMenuPosition, inMenuRotation));
+        cameraController.AdjustPitchValue(inMenuRotation.eulerAngles.x);
     }
 
     private void SwitchToGameView()
     {
         StartCoroutine(ChangePositionAndRotation(inGamePosition, inGameRotation));
-        cameraController.AdjustPitchValue(inGameRotation.x);
-    }
-
-    private void SwitchToMenuView()
-    {
-        StartCoroutine(ChangePositionAndRotation(inMenuPosition, inMenuRotation));
-        cameraController.AdjustPitchValue(inMenuRotation.x);
+        cameraController.AdjustPitchValue(inGameRotation.eulerAngles.x);
     }
 
     private IEnumerator ChangePositionAndRotation(Vector3 targetPosition, Quaternion targetRotation, float duration = 3, float delay = 0)
@@ -66,5 +77,23 @@ public class CameraEffects : MonoBehaviour
         transform.position = targetPosition;
         transform.rotation = targetRotation;
         cameraController.EnableCameraControls(true);
+    }
+
+    private IEnumerator ScreenShakeFX(float duration, float magnitude)
+    {
+        Vector3 originalPosition = cameraController.transform.position;
+        float elapsed = 0;
+
+        while (elapsed < duration)
+        {
+            float x = Random.Range(-1, 1) * magnitude;
+            float y = Random.Range(-1, 1) * magnitude;
+
+            cameraController.transform.position = originalPosition + new Vector3(x, y, 0);
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        cameraController.transform.position = originalPosition;
     }
 }
